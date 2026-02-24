@@ -1,0 +1,468 @@
+<!DOCTYPE html><!-- v3 -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kevin Pamma</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:#1a0a0f; --card-l:#5c1a2e; --card-l2:#7b2d42; --card-r:#230d16;
+      --accent:#c9963a; --accent2:#e8b86d; --blush:#f2c4a0;
+      --text:#f5ead8; --muted:#b89a7e; --glow:rgba(201,150,58,0.18); --ring1:#0d0408;
+    }
+    
+    
+    
+
+    *{margin:0;padding:0;box-sizing:border-box;}
+
+    html,body{
+      font-family:'DM Sans',sans-serif;
+      background:var(--bg);
+      min-height:100vh;
+      overflow:hidden;
+      position:relative;
+      transition:background 0.6s ease;
+    }
+    @media(max-width:700px){
+      html,body{overflow-x:hidden;overflow-y:auto;}
+    }
+
+    #particles{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+    #mouse-glow{
+      position:fixed;width:340px;height:340px;border-radius:50%;
+      background:radial-gradient(circle,var(--glow) 0%,transparent 70%);
+      pointer-events:none;z-index:0;transform:translate(-50%,-50%);
+      transition:opacity 0.4s;
+    }
+
+    .blob{position:fixed;border-radius:50%;filter:blur(120px);z-index:0;pointer-events:none;}
+    .blob1{
+      width:600px;height:600px;top:-150px;left:-150px;
+      background:radial-gradient(circle,rgba(92,26,46,0.5) 0%,transparent 70%);
+      animation:pulse1 8s ease-in-out infinite;
+    }
+    .blob2{
+      width:500px;height:500px;bottom:-100px;right:-100px;
+      background:radial-gradient(circle,rgba(201,150,58,0.25) 0%,transparent 70%);
+      animation:pulse2 10s ease-in-out infinite;
+    }
+    @keyframes pulse1{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+    @keyframes pulse2{0%,100%{transform:scale(1)}50%{transform:scale(1.15) translate(-20px,-20px)}}
+
+    
+
+    
+
+    /* PAGE CENTER */
+    .page-center{
+      position:relative;z-index:1;min-height:100vh;
+      display:flex;align-items:center;justify-content:center;
+      padding:24px 16px;
+    }
+
+    .wrapper{
+      position:relative;display:flex;align-items:stretch;
+      max-width:820px;width:95%;border-radius:24px;overflow:hidden;
+      box-shadow:0 40px 100px rgba(0,0,0,0.6),0 0 0 1px rgba(201,150,58,0.15);
+      animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(40px) scale(0.97);}
+      to{opacity:1;transform:translateY(0) scale(1);}
+    }
+
+    /* LEFT */
+    .left{
+      background:linear-gradient(165deg,var(--card-l2) 0%,var(--card-l) 60%,var(--ring1) 100%);
+      width:280px;flex-shrink:0;padding:48px 32px;
+      display:flex;flex-direction:column;align-items:center;
+      position:relative;overflow:hidden;transition:background 0.6s;
+    }
+    .left::before{
+      content:'';position:absolute;inset:0;
+      background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='1' fill='rgba(255,255,255,0.08)'/%3E%3C/svg%3E");
+      background-size:30px 30px;
+    }
+
+    .avatar-ring{
+      position:relative;width:148px;height:148px;
+      margin-bottom:24px;flex-shrink:0;cursor:pointer;
+    }
+    .avatar-ring::before{
+      content:'';position:absolute;inset:-4px;border-radius:50%;
+      background:conic-gradient(var(--accent),var(--blush),var(--card-l2),var(--accent));
+      animation:spin 6s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .avatar-ring::after{
+      content:'';position:absolute;inset:-2px;
+      border-radius:50%;background:var(--card-l);
+    }
+    .avatar{
+      position:relative;z-index:1;width:100%;height:100%;
+      border-radius:50%;object-fit:cover;object-position:top;
+      border:3px solid var(--ring1);transition:filter 0.3s;
+    }
+    .avatar-ring:hover .avatar{filter:brightness(1.08) saturate(1.1);}
+
+    .badge{
+      position:absolute;bottom:6px;right:6px;z-index:2;
+      background:var(--accent);color:#1a0a0f;font-size:10px;
+      font-weight:700;letter-spacing:0.05em;padding:3px 7px;
+      border-radius:20px;text-transform:uppercase;
+      box-shadow:0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .name-left{
+      font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;
+      color:var(--text);text-align:center;line-height:1.2;margin-bottom:6px;
+      position:relative;z-index:1;outline:none;border-radius:6px;padding:2px 6px;
+      transition:background 0.2s;
+    }
+    
+
+    .title-left{font-size:10px;font-weight:500;letter-spacing:0.1em;white-space:nowrap;
+      text-transform:uppercase;color:var(--accent2);margin-bottom:8px;
+      position:relative;z-index:1;outline:none;border-radius:4px;padding:1px 4px;
+      transition:background 0.2s;
+    }
+    
+
+    
+    @keyframes blink{0%,100%{opacity:0.4}50%{opacity:0.9}}
+
+    .divider{
+      width:60px;height:1px;
+      background:linear-gradient(to right,transparent,var(--accent),transparent);
+      margin-bottom:32px;
+    }
+
+    .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;position:relative;z-index:1;}
+    .stat{
+      text-align:center;padding:14px 8px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(201,150,58,0.22);
+      border-radius:12px;backdrop-filter:blur(4px);
+      transition:all 0.3s ease;cursor:default;
+    }
+    .stat:hover{
+      background:rgba(201,150,58,0.1);
+      border-color:rgba(201,150,58,0.5);
+      transform:translateY(-2px);
+    }
+    .stat-number{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--accent2);display:block;}
+    .stat-label{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:2px;display:block;}
+
+    .socials{display:flex;gap:12px;margin-top:28px;position:relative;z-index:1;}
+    .social-btn{
+      width:36px;height:36px;border-radius:50%;
+      border:1px solid rgba(201,150,58,0.3);
+      display:flex;align-items:center;justify-content:center;
+      color:var(--accent2);text-decoration:none;transition:all 0.3s ease;
+    }
+    .social-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent);transform:scale(1.12);}
+
+    /* RIGHT */
+    .right{
+      background:var(--card-r);flex:1;padding:48px 40px;
+      display:flex;flex-direction:column;position:relative;
+      transition:background 0.6s;
+    }
+    .right::before{
+      content:'';position:absolute;top:0;left:0;width:1px;height:100%;
+      background:linear-gradient(to bottom,transparent,var(--accent),transparent);
+    }
+
+    .section-label{font-size:9px;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;}
+
+    .big-heading{
+      font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;
+      color:var(--text);line-height:1.1;margin-bottom:6px;
+    }
+    .big-heading span{font-weight:700;color:var(--accent2);}
+
+    .tagline{font-size:13px;color:var(--muted);margin-bottom:36px;font-weight:300;min-height:20px;}
+    .tagline-cursor{
+      display:inline-block;width:2px;height:13px;
+      background:var(--accent);margin-left:2px;vertical-align:middle;
+      animation:blink 0.8s step-end infinite;
+    }
+
+    .info-list{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px;}
+    .info-card{
+      padding:16px 18px;background:rgba(255,255,255,0.025);
+      border:1px solid rgba(201,150,58,0.12);border-radius:14px;
+      transition:all 0.3s ease;cursor:default;position:relative;overflow:hidden;
+    }
+    .info-card::before{
+      content:'';position:absolute;top:0;left:0;width:3px;height:100%;
+      background:linear-gradient(to bottom,var(--accent),var(--blush));
+      opacity:0;transition:opacity 0.3s;
+    }
+    .info-card:hover::before{opacity:1;}
+    .info-card:hover{
+      background:rgba(201,150,58,0.06);
+      border-color:rgba(201,150,58,0.3);
+      transform:translateX(4px);
+    }
+    .info-icon{font-size:18px;margin-bottom:8px;display:block;}
+    .info-label{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);font-weight:600;display:block;margin-bottom:4px;}
+    .info-value{
+      font-size:13px;color:var(--text);font-weight:400;
+      display:inline-block;
+    }
+    
+
+    .skills-title{font-size:9px;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+    .skill-row{margin-bottom:14px;}
+    .skill-top{display:flex;justify-content:space-between;margin-bottom:6px;}
+    .skill-name{font-size:11px;color:var(--text);font-weight:500;}
+    .skill-pct{font-size:11px;color:var(--accent);font-family:'Cormorant Garamond',serif;font-weight:700;}
+    .skill-bar-bg{height:3px;background:rgba(255,255,255,0.07);border-radius:99px;overflow:hidden;}
+    .skill-bar-fill{
+      height:100%;border-radius:99px;
+      background:linear-gradient(to right,var(--card-l2),var(--accent));
+      width:0%;transition:width 1.4s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    .cta-row{
+      margin-top:auto;padding-top:28px;
+      border-top:1px solid rgba(255,255,255,0.06);
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .university-badge{display:flex;align-items:center;gap:10px;}
+    .uni-icon{
+      width:36px;height:36px;
+      background:linear-gradient(135deg,var(--card-l2),var(--card-l));
+      border-radius:8px;display:flex;align-items:center;justify-content:center;
+      font-size:16px;border:1px solid rgba(201,150,58,0.3);
+    }
+    .uni-name{font-size:11px;color:var(--text);font-weight:500;display:block;}
+    .uni-loc{font-size:10px;color:var(--muted);display:block;}
+    .cta-btn{
+      padding:10px 22px;
+      background:linear-gradient(135deg,var(--card-l2),var(--accent));
+      color:#fff;font-size:11px;font-weight:600;letter-spacing:0.12em;
+      text-transform:uppercase;border:none;border-radius:30px;cursor:pointer;
+      transition:all 0.3s ease;
+      box-shadow:0 4px 20px rgba(201,150,58,0.3);
+    }
+    .cta-btn:hover{transform:scale(1.05);box-shadow:0 6px 28px rgba(201,150,58,0.5);}
+
+    .deco{position:absolute;pointer-events:none;opacity:0.06;}
+    .deco-circle{width:200px;height:200px;border-radius:50%;border:1px solid var(--accent);top:-60px;right:-60px;}
+    .deco-circle2{width:120px;height:120px;border-radius:50%;border:1px solid var(--accent);bottom:40px;right:20px;}
+
+    
+
+    /* RESPONSIVE */
+    @media(max-width:700px){
+      .page-center{align-items:flex-start;padding:16px 12px 40px;}
+      .wrapper{flex-direction:column;width:100%;max-width:440px;border-radius:20px;}
+      .left{width:100%;padding:36px 24px 28px;}
+      .avatar-ring{width:120px;height:120px;margin-bottom:18px;}
+      .stat-grid{grid-template-columns:repeat(4,1fr);gap:10px;}
+      .stat{padding:10px 4px;}
+      .stat-number{font-size:18px;}
+      .right{padding:28px 24px 32px;}
+      .right::before{display:none;}
+      .big-heading{font-size:34px;}
+      .info-list{grid-template-columns:1fr 1fr;gap:10px;}
+      .info-card{padding:12px 14px;}
+      .cta-row{flex-direction:column;gap:14px;align-items:flex-start;}
+      .toolbar{top:10px;right:10px;}
+    }
+    @media(max-width:400px){
+      .stat-grid{grid-template-columns:repeat(2,1fr);}
+      .info-list{grid-template-columns:1fr;}
+      .big-heading{font-size:28px;}
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+<div id="mouse-glow"></div>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<div class="page-center">
+  <div class="wrapper">
+
+    <div class="left">
+      <div class="avatar-ring">
+        <img class="avatar" src="profile.jpg" alt="Kevin Pamma" onerror="this.style.display='none'" />
+        <div class="badge">✦ AI-ML</div>
+      </div>
+      <div class="name-left" id="nameEl" spellcheck="false">Kevin Pamma</div>
+      <div class="title-left" id="titleEl" spellcheck="false">CSE · AI & Machine Learning</div>
+            <div class="divider"></div>
+      <div class="stat-grid">
+        <div class="stat">
+          <span class="stat-number" id="stat1">0</span>
+          <span class="stat-label">Years Old</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">1st</span>
+          <span class="stat-label">Year</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">∞</span>
+          <span class="stat-label">Ambitions</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">AI</span>
+          <span class="stat-label">Focused</span>
+        </div>
+      </div>
+      <div class="socials">
+        <a href="https://github.com/KevinPammaDev" target="_blank" class="social-btn" title="GitHub">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3C5.4.3 0 5.7 0 12.3c0 5.3 3.4 9.8 8.2 11.4.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2 0-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 24 12.3C24 5.7 18.6.3 12 .3z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/kevin-pamma-b38621382" target="_blank" class="social-btn" title="LinkedIn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a href="https://x.com/kevin_pamma" target="_blank" class="social-btn" title="Twitter / X">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="deco deco-circle"></div>
+      <div class="deco deco-circle2"></div>
+      <div class="section-label">✦ Portfolio · 2025</div>
+      <div class="big-heading">Hello,<br>I'm <span>Kevin.</span></div>
+      <div class="tagline"><span id="taglineText"></span><span class="tagline-cursor"></span></div>
+
+      <div class="info-list">
+        <div class="info-card">
+          <span class="info-icon">🎂</span>
+          <span class="info-label">Date of Birth</span>
+          <span class="info-value" id="dob" spellcheck="false">30 July 2007</span>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">🎓</span>
+          <span class="info-label">Degree</span>
+          <span class="info-value" id="degree" spellcheck="false">B.Tech · CSE AI-ML</span>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">📍</span>
+          <span class="info-label">Location</span>
+          <span class="info-value" id="location" spellcheck="false">Chandigarh, India</span>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">💡</span>
+          <span class="info-label">Focus Area</span>
+          <span class="info-value" id="focus" spellcheck="false">ML · Deep Learning</span>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">📞</span>
+          <span class="info-label">Phone</span>
+          <span class="info-value"><a href="tel:+918729056055" style="color:inherit;text-decoration:none;">+91 8729056055</a></span>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">✉️</span>
+          <span class="info-label">Email</span>
+          <span class="info-value"><a href="mailto:kevinpamma30@gmail.com" style="color:inherit;text-decoration:none;">kevinpamma30@gmail.com</a></span>
+        </div>
+      </div>
+
+      <div class="skills-title">✦ Current Learning Path</div>
+      <div class="skill-row">
+        <div class="skill-top"><span class="skill-name">Artificial Intelligence</span><span class="skill-pct" id="pct1">0%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" id="bar1" data-pct="82"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-top"><span class="skill-name">Machine Learning</span><span class="skill-pct" id="pct2">0%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" id="bar2" data-pct="74"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-top"><span class="skill-name">Programming (Python / C++)</span><span class="skill-pct" id="pct3">0%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" id="bar3" data-pct="88"></div></div>
+      </div>
+
+      <div class="cta-row">
+        <div class="university-badge">
+          <div class="uni-icon">🏛️</div>
+          <div>
+            <span class="uni-name">Chandigarh University</span>
+            <span class="uni-loc">Punjab, India · Est. 2012</span>
+          </div>
+        </div>
+        <button class="cta-btn" onclick="window.open('https://www.linkedin.com/in/kevin-pamma-b38621382','_blank')">Connect ✦</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ── PARTICLES ── */
+const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');
+let W,H;
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+resize();window.addEventListener('resize',resize);
+
+const particles=[];
+class P{
+  constructor(){this.reset();}
+  reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.r=Math.random()*1.5+0.4;this.a=Math.random()*0.45+0.1;this.vx=(Math.random()-0.5)*0.3;this.vy=(Math.random()-0.5)*0.3;}
+  update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W||this.y<0||this.y>H)this.reset();}
+  draw(){
+    const c=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+    ctx.fillStyle=c;ctx.globalAlpha=this.a;ctx.fill();ctx.globalAlpha=1;
+  }
+}
+for(let i=0;i<90;i++)particles.push(new P());
+function drawLines(){
+  const c=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d<100){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=c;ctx.globalAlpha=(1-d/100)*0.12;ctx.lineWidth=0.5;ctx.stroke();ctx.globalAlpha=1;}
+    }
+  }
+}
+(function loop(){ctx.clearRect(0,0,W,H);particles.forEach(p=>{p.update();p.draw();});drawLines();requestAnimationFrame(loop);})();
+
+/* ── MOUSE GLOW ── */
+const glow=document.getElementById('mouse-glow');
+document.addEventListener('mousemove',e=>{glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px';});
+document.addEventListener('mouseleave',()=>glow.style.opacity='0');
+document.addEventListener('mouseenter',()=>glow.style.opacity='1');
+
+/* ── COUNTERS ── */
+function animCount(el,target,dur){
+  let start=null;
+  (function step(ts){if(!start)start=ts;const p=Math.min((ts-start)/dur,1);const e=1-Math.pow(1-p,3);el.textContent=Math.round(e*target);if(p<1)requestAnimationFrame(step);})(performance.now());
+}
+setTimeout(()=>{animCount(document.getElementById('stat1'),18,1200);},500);
+
+/* ── SKILL BARS ── */
+[[1,82],[2,74],[3,88]].forEach(([i,pct],idx)=>{
+  setTimeout(()=>{
+    document.getElementById('bar'+i).style.width=pct+'%';
+    let c=0;const iv=setInterval(()=>{c++;document.getElementById('pct'+i).textContent=c+'%';if(c>=pct)clearInterval(iv);},1400/pct);
+  },idx*200+600);
+});
+
+/* ── TYPING ── */
+const phrases=['Crafting intelligent systems · Building the future with AI','Turning data into decisions 🚀','ML engineer in the making ✦','Code. Learn. Innovate. Repeat.'];
+let pi=0,ci=0,del=false;
+const tagEl=document.getElementById('taglineText');
+function type(){
+  const ph=phrases[pi];
+  if(!del){tagEl.textContent=ph.slice(0,++ci);if(ci===ph.length){del=true;setTimeout(type,2200);return;}}
+  else{tagEl.textContent=ph.slice(0,--ci);if(ci===0){del=false;pi=(pi+1)%phrases.length;setTimeout(type,300);return;}}
+  setTimeout(type,del?38:58);
+}
+setTimeout(type,900);
+</script>
+</body>
+</html>
